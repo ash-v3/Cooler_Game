@@ -48,6 +48,9 @@ func _physics_process(delta):
 	# The point the ray and plane intersect
 	var intersection = plane.intersects_ray($Camera.global_transform.origin, ray)
 	
+	var test_ball = get_node("../TestBall")
+	test_ball.global_transform.origin = intersection
+	
 	# Sometimes intersection is null, don't know why
 	if intersection:
 		# Get the normalized vector from the intersection point to the player
@@ -56,8 +59,6 @@ func _physics_process(delta):
 		# Convert vector into 2 dimensions for easier calculation
 		mouse_vector = Vector2(mouse_vector.x, mouse_vector.z)
 		
-		print(look_vector)
-
 		# The angle from the direction of the player is looking to the mouse
 		var angle = look_vector.angle_to(mouse_vector)
 		
@@ -66,3 +67,5 @@ func _physics_process(delta):
 		
 		# Save the new look vector
 		look_vector = mouse_vector
+		
+		print(angle, look_vector)
