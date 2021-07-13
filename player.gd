@@ -5,7 +5,7 @@ var acceleration : float = 1.5
 
 # The direction the player is looking
 # maybe: Vector2.RIGHT.rotate(angle)
-onready var look_vector = Vector2(global_transform.basis.x.x, global_transform.basis.z.z)
+var look_vector = Vector2(1, 0)
 
 func _ready():
 	pass
