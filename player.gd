@@ -53,13 +53,12 @@ func _physics_process(delta):
 	var ray = $Camera.project_ray_normal(mouse_position)
 
 	# Player position
-	#var player_y = global_transform.origin.y
-	var nose_y = $Mesh/Nose.global_transform.origin.y
+	var player_y = global_transform.origin.y
 	
 	# A plane with a normal vector that faces straight up
 	# Second argument is distance from origin that plane is
 	# Plane is ground plane raised to player's position
-	var plane = Plane(Vector3(0, 1, 0), nose_y)
+	var plane = Plane(Vector3(0, 1, 0), player_y)
 	
 	# The point the ray and plane intersect
 	var intersection = plane.intersects_ray($Camera.global_transform.origin, ray)
