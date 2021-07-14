@@ -1,33 +1,49 @@
 extends KinematicBody
 
 var velocity : Vector3 = Vector3.ZERO
-var acceleration : float = 1.5
+var acceleration : float = 50
+var max_speed : float = 10
+var friction_strength : float = 35
 
 # The direction the player is looking
-# maybe: Vector2.RIGHT.rotate(angle)
 var look_vector = Vector2(1, 0)
 
 func _ready():
 	pass
 
 func _physics_process(delta):
-	var horizontal_input = 0
-	var vertical_input = 0
+	var side_input = 0
+	var forward_input = 0
 	
 	if Input.is_action_pressed("left"):
-		horizontal_input -= 1
+		side_input -= 1
 	if Input.is_action_pressed("right"):
-		horizontal_input += 1
+		side_input += 1
 	if Input.is_action_pressed("up"):
-		vertical_input -= 1
+		forward_input += 1
 	if Input.is_action_pressed("down"):
-		vertical_input += 1
-		
-	velocity += Vector3(horizontal_input, 0, vertical_input) * acceleration * delta
+		forward_input -= 1
+	
+	# X is forward and z is sideways currently
+	velocity += Vector3(forward_input, 0, side_input) * acceleration * delta
+	
+	if velocity.length() > max_speed:
+		velocity *= max_speed / velocity.length()
 
 	# Move the player
 	var adjusted_velocity = move_and_slide(velocity)
 	velocity = adjusted_velocity
+	
+	# The unit vector of the player's movement
+	var unit_vector : Vector3 = velocity.normalized()
+	
+	# Apply friction to the player
+	var friction_velocity : Vector3 = Vector3(-unit_vector.x * friction_strength * delta, 0, -unit_vector.z * friction_strength * delta)
+	
+	if friction_velocity.length() < velocity.length():
+		velocity += friction_velocity
+	else:
+		velocity = Vector3.ZERO
 
 	# Rotate to face mouse
 	# Mouse position
@@ -37,19 +53,16 @@ func _physics_process(delta):
 	var ray = $Camera.project_ray_normal(mouse_position)
 
 	# Player position
-	var player_y = global_transform.origin.y
-	var eyes_y = $Mesh/Nose.global_transform.origin.y
+	#var player_y = global_transform.origin.y
+	var nose_y = $Mesh/Nose.global_transform.origin.y
 	
 	# A plane with a normal vector that faces straight up
 	# Second argument is distance from origin that plane is
 	# Plane is ground plane raised to player's position
-	var plane = Plane(Vector3(0, 1, 0), eyes_y)
+	var plane = Plane(Vector3(0, 1, 0), nose_y)
 	
 	# The point the ray and plane intersect
 	var intersection = plane.intersects_ray($Camera.global_transform.origin, ray)
-	
-	var test_ball = get_node("../TestBall")
-	test_ball.global_transform.origin = intersection
 	
 	# Sometimes intersection is null, don't know why
 	if intersection:
@@ -67,5 +80,3 @@ func _physics_process(delta):
 		
 		# Save the new look vector
 		look_vector = mouse_vector
-		
-		print(angle, look_vector)

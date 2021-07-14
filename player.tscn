@@ -7,7 +7,7 @@ radius = 0.25
 mid_height = 0.5
 
 [sub_resource type="CapsuleMesh" id=2]
-radius = 0.04
+radius = 0.075
 mid_height = 0.2
 
 [node name="Player" type="KinematicBody"]
@@ -27,4 +27,4 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.92443, 0 )
+transform = Transform( -3.76932e-08, 0.506365, -0.862319, 2.21339e-08, 0.862319, 0.506365, 1, 5.32907e-15, -4.37114e-08, -1.08666, 1.25604, 0 )
