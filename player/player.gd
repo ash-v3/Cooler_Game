@@ -1,5 +1,8 @@
 extends KinematicBody
 
+export var camera_path : NodePath
+var camera
+
 var velocity : Vector3 = Vector3.ZERO
 var acceleration : float = 50
 var max_speed : float = 10
@@ -9,7 +12,12 @@ var friction_strength : float = 35
 var look_vector = Vector2(1, 0)
 
 func _ready():
-	pass
+	camera = get_node(camera_path).get_node("Camera")
+
+func _input(event):
+	if event.is_action("mouse_click"):
+		shoot()
+
 
 func _physics_process(delta):
 	var side_input = 0
@@ -50,7 +58,7 @@ func _physics_process(delta):
 	var mouse_position = get_viewport().get_mouse_position()
 	
 	# Extend a ray from the camera into infinity
-	var ray = $Camera.project_ray_normal(mouse_position)
+	var ray = camera.project_ray_normal(mouse_position)
 
 	# Player position
 	var player_y = global_transform.origin.y
@@ -61,7 +69,7 @@ func _physics_process(delta):
 	var plane = Plane(Vector3(0, 1, 0), player_y)
 	
 	# The point the ray and plane intersect
-	var intersection = plane.intersects_ray($Camera.global_transform.origin, ray)
+	var intersection = plane.intersects_ray(camera.global_transform.origin, ray)
 	
 	# Sometimes intersection is null, don't know why
 	if intersection:
@@ -75,7 +83,21 @@ func _physics_process(delta):
 		var angle = look_vector.angle_to(mouse_vector)
 		
 		# Rotate the mesh around the y axis to face the mouse
-		$Mesh.rotate(Vector3(0, 1, 0), -angle)
+		rotate(Vector3(0, 1, 0), -angle)
 		
 		# Save the new look vector
 		look_vector = mouse_vector
+
+func shoot():
+	var bullet = preload("res://projectiles/bullet.tscn").instance()
+
+	var bullets = get_tree().get_root().get_node("TestLevel/Bullets")
+
+	bullets.add_child(bullet)
+
+	bullet.global_transform.origin = $BulletPosition.get_global_transform().origin
+
+	var direction_vector = Vector3(look_vector.x, 0, look_vector.y)
+	
+	bullet.set_direction(direction_vector)
+

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/player_camera.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 16.875, 0.169, 25.592 )
@@ -31,4 +32,11 @@ material/0 = null
 shape = SubResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00725198, 1.12508, 0.0119019 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.98947, 0 )
+camera_path = NodePath("../PlayerCamera")
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 2 )]
+player_path = NodePath("../Player")
+
+[node name="Bullets" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0358, 0 )
