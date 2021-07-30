@@ -18,7 +18,6 @@ func _input(event):
 	if event.is_action("mouse_click"):
 		shoot()
 
-
 func _physics_process(delta):
 	var side_input = 0
 	var forward_input = 0
