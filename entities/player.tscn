@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://player/player.gd" type="Script" id=1]
+[ext_resource path="res://entities/player.gd" type="Script" id=1]
 [ext_resource path="res://materials/Shiny Black.material" type="Material" id=2]
 [ext_resource path="res://materials/Skin.material" type="Material" id=3]
 [ext_resource path="res://materials/Eyes.material" type="Material" id=4]
@@ -228,6 +228,7 @@ material/0 = null
 
 [node name="RightArm" type="MeshInstance" parent="Body/Arms"]
 transform = Transform( 0, -0.5, 1.11759e-08, -1.11759e-08, 0, -0.375, 0.375, -1.49012e-08, 0, 0.723285, 0.481437, 0.496511 )
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 

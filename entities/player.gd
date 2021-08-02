@@ -1,4 +1,8 @@
 extends KinematicBody
+class_name Player
+
+signal shoot_bullet(new_bullet)
+signal hp_changed(new_hp, hp_ratio)
 
 export var camera_path : NodePath
 var camera
@@ -7,6 +11,8 @@ var velocity : Vector3 = Vector3.ZERO
 var acceleration : float = 50
 var max_speed : float = 10
 var friction_strength : float = 35
+var max_hp : int = 100
+var hp : int = max_hp
 
 # The direction the player is looking
 var look_vector = Vector2(1, 0)
@@ -15,8 +21,14 @@ func _ready():
 	camera = get_node(camera_path).get_node("Camera")
 
 func _input(event):
-	if event.is_action("mouse_click"):
+	if event.is_action_pressed("mouse_click"):
 		shoot()
+	
+	if event.is_action_pressed("test_hurt"):
+		hp -= 5
+		var hp_ratio = hp as float / max_hp as float
+
+		emit_signal("hp_changed", hp, hp_ratio)
 
 func _physics_process(delta):
 	var side_input = 0
@@ -90,9 +102,7 @@ func _physics_process(delta):
 func shoot():
 	var bullet = preload("res://projectiles/bullet.tscn").instance()
 
-	var bullets = get_tree().get_root().get_node("TestLevel/Bullets")
-
-	bullets.add_child(bullet)
+	emit_signal("shoot_bullet", bullet)
 
 	bullet.global_transform.origin = $BulletPosition.get_global_transform().origin
 
