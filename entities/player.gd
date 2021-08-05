@@ -1,11 +1,12 @@
 extends KinematicBody
-class_name Player
 
 signal shoot_bullet(new_bullet)
 signal hp_changed(new_hp, hp_ratio)
 
 export var camera_path : NodePath
 var camera
+
+var is_player : bool = true
 
 var velocity : Vector3 = Vector3.ZERO
 var acceleration : float = 50
