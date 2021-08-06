@@ -38,8 +38,8 @@ func spawn_rooms(count):
 
 		$Level.add_child(room)
 
-		var direction = stepify(randi(), 40)
-		room.global_transform.origin += Vector3(direction, 0, 0)
+		var direction = randi() % (90 + 1)
+		room.global_transform.origin += Vector3(40 * i, 0, 0)
 
 ####Signal Methods####
 func on_player_shoot_bullet(new_bullet):
