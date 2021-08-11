@@ -10,6 +10,9 @@ var rooms : Dictionary
 func _ready():
 	randomize()
 	
+	if funcref(TB, "test"):
+		TB.test()
+	
 	# Find player in entities
 	for node in $Entities.get_children():
 		if node.is_player:
