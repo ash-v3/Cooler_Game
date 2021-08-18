@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://level_gen/layout_generator.gd" type="Script" id=1]
-[ext_resource path="res://level_gen/room_body.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 300 )
@@ -14,7 +13,7 @@ space_override = 3
 gravity_point = true
 gravity_distance_scale = 0.05
 gravity_vec = Vector2( 512, 300 )
-gravity = -600.0
+gravity = 0.0
 linear_damp = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -24,5 +23,6 @@ shape = SubResource( 1 )
 [node name="Rooms" type="Node2D" parent="."]
 position = Vector2( 512, 300 )
 
-[node name="StaticBody2D" parent="Rooms" instance=ExtResource( 2 )]
-position = Vector2( -512, -300 )
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 512, 300 )
+current = true

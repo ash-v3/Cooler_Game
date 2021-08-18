@@ -1,10 +1,10 @@
-extends StaticBody2D
+extends RigidBody2D
 
-func _ready():
-	pass
+var size
 
-func make_room(pos, size):
+func make_room(_pos, _size):
+	position = _pos
+	size = _size
 	var s = RectangleShape2D.new()
 	s.extents = size
-	
 	$CollisionShape2D.shape = s
