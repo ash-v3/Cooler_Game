@@ -11,3 +11,7 @@ position = Vector2( 512, 300 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 512, 300 )
 current = true
+
+[node name="TileMap" type="TileMap" parent="."]
+cell_size = Vector2( 32, 32 )
+format = 1
